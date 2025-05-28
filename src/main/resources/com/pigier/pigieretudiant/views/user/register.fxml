@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="693.0" prefWidth="943.0" style="-fx-background-color: #4361ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.UserController">
+   <children>
+      <Pane layoutX="395.0" layoutY="60.0" prefHeight="619.0" prefWidth="509.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ImageView fitHeight="103.0" fitWidth="331.0" layoutX="120.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assests/images/pigier_logo.jpeg" />
+               </image>
+            </ImageView>
+            <Button layoutX="87.0" layoutY="493.0" mnemonicParsing="false" onAction="#onRegister" prefHeight="41.0" prefWidth="365.0" style="-fx-background-color: #4361ee;" text="ENREGISTRER" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <TextField fx:id="emailRegister" layoutX="87.0" layoutY="167.0" prefHeight="41.0" prefWidth="365.0" />
+            <Label layoutX="87.0" layoutY="142.0" prefHeight="18.0" prefWidth="38.0" text="Email" />
+            <Label layoutX="87.0" layoutY="224.0" prefHeight="18.0" prefWidth="89.0" text="Mot de passe" />
+            <PasswordField fx:id="passwordRegister" layoutX="87.0" layoutY="248.0" prefHeight="41.0" prefWidth="365.0" />
+            <Label layoutX="134.0" layoutY="559.0" prefHeight="18.0" prefWidth="117.0" text="Dejà un compte ?" />
+            <Button layoutX="254.0" layoutY="555.0" mnemonicParsing="false" onAction="#gotToLogin" prefHeight="26.0" prefWidth="117.0" style="-fx-background-color: white;" text="Connectez-vous" textFill="#4361ee">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <PasswordField fx:id="passwordRegisterConfirmation" layoutX="87.0" layoutY="327.0" prefHeight="41.0" prefWidth="365.0" />
+            <PasswordField fx:id="codeInscription" layoutX="87.0" layoutY="426.0" prefHeight="41.0" prefWidth="365.0" />
+            <Label layoutX="87.0" layoutY="402.0" prefHeight="18.0" prefWidth="105.0" text="Code inscription" />
+            <Label layoutX="87.0" layoutY="301.0" prefHeight="18.0" prefWidth="192.0" text="Confirmation de mot de passe" />
+            <Label fx:id="erreurPasswordConfirmation" layoutX="90.0" layoutY="374.0" textFill="#e10e0e">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label fx:id="erreurCodeInscription" layoutX="87.0" layoutY="467.0" prefHeight="17.0" prefWidth="192.0" textFill="#e10e0e">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1524.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.EtudiantController">
+    <children>
+        <!-- Sidebar Navigation -->
+        <Pane prefHeight="837.0" prefWidth="260.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 0);">
+            <children>
+                <!-- Logo Section -->
+                <Pane layoutX="20.0" layoutY="20.0" prefHeight="120.0" prefWidth="220.0">
+                    <children>
+                        <ImageView fitHeight="80.0" fitWidth="120.0" layoutX="50.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../assests/images/logo_pigier.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+
+                <!-- Navigation Menu -->
+                <VBox layoutX="20.0" layoutY="160.0" prefWidth="220.0" spacing="8.0">
+                    <children>
+                        <!-- Dashboard -->
+                        <Pane onMouseClicked="#goToDashbord" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Dashboard" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🏠" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Étudiants - Active -->
+                        <Pane prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: rgba(255,255,255,0.15); -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Étudiants" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🎓" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Filières -->
+                        <Pane prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Filières" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📚" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Ressortissants -->
+                        <Pane prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Ressortissants" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🌍" textFill="WHITE" />
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+
+                <!-- Logout Button -->
+                <Pane layoutX="20.0" layoutY="750.0" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #dc3545; -fx-background-radius: 8; -fx-cursor: hand;">
+                    <children>
+                        <Label layoutX="50.0" layoutY="15.0" text="Déconnexion" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🚪" textFill="WHITE" />
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+
+        <!-- Main Content Area -->
+        <Pane layoutX="260.0" layoutY="0.0" prefHeight="837.0" prefWidth="1264.0">
+            <children>
+                <!-- Header -->
+                <Pane prefHeight="80.0" prefWidth="1264.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                    <children>
+                        <Label layoutX="30.0" layoutY="25.0" text="Gestion des Étudiants" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="28.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Search Bar -->
+                        <HBox layoutX="800.0" layoutY="22.0" prefHeight="35.0" prefWidth="318.0" spacing="10.0">
+                            <children>
+                                <TextField prefHeight="35.0" prefWidth="200.0" promptText="Rechercher un étudiant..." style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e0e0e0;" />
+                                <Button prefHeight="35.0" prefWidth="94.0" style="-fx-background-color: #4361ee; -fx-text-fill: white; -fx-background-radius: 20;" text="🔍 Chercher" />
+                            </children>
+                        </HBox>
+                    </children>
+                </Pane>
+
+                <!-- Action Buttons -->
+                <HBox layoutX="30.0" layoutY="100.0" spacing="15.0">
+                    <children>
+                        <Button onAction="#addEtudiant" prefHeight="45.0" prefWidth="160.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 14px; -fx-font-weight: bold;" text="➕ Nouvel Étudiant" />
+                        <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 14px;" text="📊 Exporter" />
+                        <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #ffc107; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 14px;" text="🔄 Actualiser" />
+                    </children>
+                </HBox>
+
+                <!-- Students Table -->
+                <Pane layoutX="30.0" layoutY="244.0" prefHeight="480.0" prefWidth="1200.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 4);">
+                    <children>
+                        <Label layoutX="20.0" layoutY="15.0" text="Liste des Étudiants" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <!-- Filter Buttons -->
+                        <HBox layoutX="20.0" layoutY="45.0" spacing="10.0">
+                            <children>
+                                <Button prefHeight="30.0" prefWidth="60.0" style="-fx-background-color: #4361ee; -fx-text-fill: white; -fx-background-radius: 15;" text="Tous" />
+                                <Button prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #e9ecef; -fx-text-fill: #495057; -fx-background-radius: 15;" text="L1" />
+                                <Button prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #e9ecef; -fx-text-fill: #495057; -fx-background-radius: 15;" text="L2" />
+                                <Button prefHeight="30.0" prefWidth="40.0" style="-fx-background-color: #e9ecef; -fx-text-fill: #495057; -fx-background-radius: 15;" text="L3" />
+                            </children>
+                        </HBox>
+
+                        <!-- Table View -->
+                        <TableView layoutX="20.0" layoutY="90.0" prefHeight="370.0" prefWidth="1160.0" style="-fx-background-color: transparent;">
+                            <columns>
+                                <TableColumn prefWidth="80.0" text="ID" />
+                                <TableColumn prefWidth="150.0" text="Nom" />
+                                <TableColumn prefWidth="150.0" text="Prénom" />
+                                <TableColumn prefWidth="200.0" text="Email" />
+                                <TableColumn prefWidth="100.0" text="Niveau" />
+                                <TableColumn prefWidth="150.0" text="Filière" />
+                                <TableColumn prefWidth="120.0" text="Date d'inscription" />
+                                <TableColumn prefWidth="100.0" text="Statut" />
+                                <TableColumn prefWidth="110.0" text="Actions" />
+                            </columns>
+                            <columns>
+                                <TableColumn prefWidth="80.0" text="ID" />
+                                <TableColumn prefWidth="150.0" text="Nom" />
+                                <TableColumn prefWidth="150.0" text="Prénom" />
+                                <TableColumn prefWidth="200.0" text="Email" />
+                                <TableColumn prefWidth="100.0" text="Niveau" />
+                                <TableColumn prefWidth="150.0" text="Filière" />
+                                <TableColumn prefWidth="120.0" text="Date d'inscription" />
+                                <TableColumn prefWidth="100.0" text="Statut" />
+                                <TableColumn prefWidth="110.0" text="Actions" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </Pane>
+            <HBox layoutX="80.0" layoutY="177.0" prefHeight="45.0" prefWidth="1084.0" spacing="15.0">
+               <children>
+                  <Button prefHeight="45.0" prefWidth="187.0" style="-fx-background-color: #4361ee; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 14px; -fx-font-weight: bold;" text="Toutes les filière" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="AD" textFill="#495057" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="CDM" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="RGL" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="HT" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="CF" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="MA" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="RH" />
+                  <Button prefHeight="45.0" prefWidth="140.0" style="-fx-background-color: #e9ecef; -fx-background-radius: 8; -fx-font-size: 14px;" text="Compta" />
+               </children>
+            </HBox>
+            </children>
+        </Pane>
+    </children>
+</Pane>

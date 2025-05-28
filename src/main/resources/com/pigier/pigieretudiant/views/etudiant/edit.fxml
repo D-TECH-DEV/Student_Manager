@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1489.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="your.package.StudentController">
+
+    <children>
+        <!-- Sidebar Navigation -->
+        <Pane prefHeight="837.0" prefWidth="260.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 15, 0, 3, 0);">
+            <children>
+                <!-- Logo Section -->
+                <Pane layoutX="20.0" layoutY="20.0" prefHeight="120.0" prefWidth="220.0">
+                    <children>
+                        <ImageView fitHeight="80.0" fitWidth="120.0" layoutX="50.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../assests/images/logo_pigier.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+
+                <!-- Navigation Menu -->
+                <VBox layoutX="20.0" layoutY="160.0" prefWidth="220.0" spacing="8.0">
+                    <children>
+                        <!-- Dashboard -->
+                        <Pane fx:id="dashboardBtn" onMouseClicked="#handleDashboard" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Dashboard" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🏠" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Étudiants (Active) -->
+                        <Pane fx:id="studentsBtn" onMouseClicked="#handleStudents" prefHeight="50.0" prefWidth="220.0" style="-fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Étudiants" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🎓" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Filières -->
+                        <Pane fx:id="coursesBtn" onMouseClicked="#handleCourses" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Filières" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📚" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Ressortissants -->
+                        <Pane fx:id="graduatesBtn" onMouseClicked="#handleGraduates" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Ressortissants" textFill="WHITE">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🌍" textFill="WHITE" />
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+
+                <!-- Logout Button -->
+                <Pane fx:id="logoutBtn" layoutX="20.0" layoutY="750.0" onMouseClicked="#handleLogout" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #dc3545; -fx-background-radius: 8; -fx-cursor: hand;">
+                    <children>
+                        <Label layoutX="50.0" layoutY="15.0" text="Déconnexion" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🚪" textFill="WHITE" />
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+
+        <!-- Main Content Area -->
+        <Pane layoutX="260.0" layoutY="0.0" prefHeight="837.0" prefWidth="1229.0">
+            <children>
+                <!-- Header -->
+                <Pane prefHeight="80.0" prefWidth="1229.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                    <children>
+                        <Label layoutX="30.0" layoutY="30.0" text="Gestion des Étudiants" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+
+                        <!-- User Profile Circle -->
+                        <Circle fill="#4361ee" layoutX="1170.0" layoutY="40.0" radius="20.0" stroke="#dee2e6" strokeWidth="2.0" />
+                        <Label layoutX="1160.0" layoutY="35.0" text="A" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+
+                <!-- Content Container -->
+                <HBox layoutX="30.0" layoutY="100.0" prefHeight="717.0" prefWidth="1169.0" spacing="20.0">
+                    <children>
+                        <!-- Student Profile Card -->
+                        <VBox prefHeight="717.0" prefWidth="350.0" spacing="20.0">
+                            <children>
+                                <!-- Profile Section -->
+                                <Pane prefHeight="400.0" prefWidth="350.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                    <children>
+                                        <!-- Profile Picture -->
+                                        <Circle fill="#4361ee" layoutX="175.0" layoutY="80.0" radius="50.0" stroke="#dee2e6" strokeWidth="3.0" />
+                                        <ImageView fx:id="profileImage" fitHeight="90.0" fitWidth="90.0" layoutX="130.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" />
+
+                                        <!-- Student Name -->
+                                        <Label fx:id="studentNameProfile" layoutX="50.0" layoutY="150.0" prefHeight="30.0" prefWidth="250.0" text="NOM - PRÉNOM" textAlignment="CENTER" textFill="#2c3e50">
+                                            <font>
+                                                <Font name="System Bold" size="18.0" />
+                                            </font>
+                                        </Label>
+
+                                        <!-- Student Program -->
+                                        <Label fx:id="studentProgram" layoutX="50.0" layoutY="185.0" prefHeight="25.0" prefWidth="250.0" text="FILIÈRE - ANNÉE" textAlignment="CENTER" textFill="#6c757d">
+                                            <font>
+                                                <Font size="14.0" />
+                                            </font>
+                                        </Label>
+
+                                        <!-- Action Buttons -->
+                                        <HBox alignment="CENTER" layoutX="50.0" layoutY="280.0" prefWidth="250.0" spacing="15.0">
+                                            <children>
+                                                <Button fx:id="editBtn" onAction="#handleEdit" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #4361ee; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Modifier">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Button>
+                                                <Button fx:id="deleteBtn" onAction="#handleDelete" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 8; -fx-cursor: hand;" text="Supprimer">
+                                                    <font>
+                                                        <Font name="System Bold" size="14.0" />
+                                                    </font>
+                                                </Button>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </padding>
+                                </Pane>
+                            </children>
+                        </VBox>
+
+                        <!-- Student Details Card -->
+                        <VBox prefHeight="717.0" prefWidth="799.0" spacing="20.0">
+                            <children>
+                                <Pane prefHeight="717.0" prefWidth="799.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);">
+                                    <children>
+                                        <!-- Header Tabs -->
+                                        <HBox alignment="CENTER_LEFT" layoutX="30.0" layoutY="30.0" prefWidth="739.0" spacing="30.0">
+                                            <children>
+                                                <Label text="Informations Personnelles" textFill="#4361ee">
+                                                    <font>
+                                                        <Font name="System Bold" size="16.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label text="Documents" textFill="#6c757d">
+                                                    <font>
+                                                        <Font size="16.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label text="Notes et Résultats" textFill="#6c757d">
+                                                    <font>
+                                                        <Font size="16.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </HBox>
+
+                                        <Separator layoutX="30.0" layoutY="70.0" prefWidth="739.0" />
+
+                                        <!-- Information Grid -->
+                                        <ScrollPane layoutX="30.0" layoutY="90.0" prefHeight="597.0" prefWidth="739.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                                            <content>
+                                                <VBox spacing="25.0">
+                                                    <children>
+                                                        <!-- Personal Information Section -->
+                                                        <VBox spacing="15.0">
+                                                            <children>
+                                                                <Label text="Informations Personnelles" textFill="#2c3e50">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="18.0" />
+                                                                    </font>
+                                                                </Label>
+
+                                                                <!-- Information Fields -->
+                                                                <VBox spacing="12.0">
+                                                                    <children>
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Matricule :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="matricule" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Nom et Prénoms :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="nom" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Date de naissance :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="dateNaissance" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Lieu de naissance :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="lieuxNaissance" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Genre :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="genre" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+                                                                    </children>
+                                                                </VBox>
+                                                            </children>
+                                                        </VBox>
+
+                                                        <!-- Contact Information Section -->
+                                                        <VBox spacing="15.0">
+                                                            <children>
+                                                                <Label text="Informations de Contact" textFill="#2c3e50">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="18.0" />
+                                                                    </font>
+                                                                </Label>
+
+                                                                <VBox spacing="12.0">
+                                                                    <children>
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Téléphone :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="contact" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="E-mail :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="email" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+                                                                    </children>
+                                                                </VBox>
+                                                            </children>
+                                                        </VBox>
+
+                                                        <!-- Academic Information Section -->
+                                                        <VBox spacing="15.0">
+                                                            <children>
+                                                                <Label text="Informations Académiques" textFill="#2c3e50">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="18.0" />
+                                                                    </font>
+                                                                </Label>
+
+                                                                <VBox spacing="12.0">
+                                                                    <children>
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Année du BAC :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="anneBac" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+                                                                    </children>
+                                                                </VBox>
+                                                            </children>
+                                                        </VBox>
+
+                                                        <!-- Parent Information Section -->
+                                                        <VBox spacing="15.0">
+                                                            <children>
+                                                                <Label text="Informations du Parent/Tuteur" textFill="#2c3e50">
+                                                                    <font>
+                                                                        <Font name="System Bold" size="18.0" />
+                                                                    </font>
+                                                                </Label>
+
+                                                                <VBox spacing="12.0">
+                                                                    <children>
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Nom du parent :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="nomParent" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+
+                                                                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                                                            <children>
+                                                                                <Label minWidth="150.0" text="Contact du parent :" textFill="#495057">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="contactParent" text="" textFill="#2c3e50">
+                                                                                    <font>
+                                                                                        <Font size="14.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </HBox>
+                                                                    </children>
+                                                                </VBox>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                    </padding>
+                                                </VBox>
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </Pane>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
+    </children>
+    <effect>
+        <DropShadow color="#00000026" />
+    </effect>
+</Pane>
