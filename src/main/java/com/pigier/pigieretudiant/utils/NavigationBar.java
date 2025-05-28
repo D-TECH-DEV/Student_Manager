@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,11 +16,13 @@ import java.util.Objects;
 
 public class NavigationBar {
 
-    @FXML
-    public static void goToDashbord(ActionEvent event) throws IOException {
-        SceneUtils.openPage((Node) event.getSource(),"/com/pigier/pigieretudiant/views/dashbord.fxml", "Dashbord");
-    }
 
+
+    @FXML
+    public void goToDashbord(MouseEvent mouseEvent) throws IOException {
+//        SceneUtils.changeChild(chilFenetre, fxmlPath);
+//        SceneUtils.openPage((Node) mouseEvent.getSource(),"/com/pigier/pigieretudiant/views/dashbord.fxml", "Liste des Etudiant");
+    }
     @FXML
     public void goToListeEtudiant(MouseEvent mouseEvent) throws IOException {
         SceneUtils.openPage((Node) mouseEvent.getSource(),"/com/pigier/pigieretudiant/views/etudiant/list.fxml", "Liste des Etudiant");
@@ -38,4 +41,6 @@ public class NavigationBar {
 
 
 
+//    public void goToDashbord(MouseEvent event) {
+//    }
 }

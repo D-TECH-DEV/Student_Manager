@@ -47,7 +47,9 @@ public class UserController {
         //System.out.println(testLogin);
         switch (testLogin) {
             case "OK" -> {
-                NavigationBar.goToDashbord(event);
+                SceneUtils.openPage((Node) event.getSource(),"/com/pigier/pigieretudiant/views/dashbord.fxml", "Dashbord");
+
+//                NavigationBar.goToDashbord(event);
 //                EtudiantController etudiantController = new EtudiantController();
 //                etudiantController.showInfoPersonnelle();
 

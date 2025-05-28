@@ -29,7 +29,7 @@ public class SplashScreen extends Application {
         pause.setOnFinished(event -> {
             try {
 //               FXMLLoader fxmlLoader = new FXMLLoader(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/user/login.fxml"));
-                FXMLLoader fxmlLoader = new FXMLLoader(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/etudiant/list.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/MainView.fxml"));
 
                 Parent root = fxmlLoader.load();
 

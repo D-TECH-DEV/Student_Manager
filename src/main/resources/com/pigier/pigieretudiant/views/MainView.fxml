@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="837.0" prefWidth="1524.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.MainController">
+
+    <!-- Inclusion de la barre de navigation -->
+
+    <children>
+<!--        <fx:include fx:id="navigationBar" source="layouts/NavigationBar.fxml"/>-->
+        <Pane prefHeight="837.0" prefWidth="260.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 0);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+            <children>
+                <!-- Logo Section -->
+                <Pane layoutX="20.0" layoutY="20.0" prefHeight="120.0" prefWidth="220.0">
+                    <children>
+                        <ImageView fitHeight="80.0" fitWidth="120.0" layoutX="50.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../assests/images/logo_pigier.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+
+                <!-- Navigation Menu -->
+                <VBox layoutX="20.0" layoutY="160.0" prefWidth="220.0" spacing="8.0">
+                    <children>
+                        <!-- Dashboard -->
+                        <Pane fx:id="dashboardBtn" onMouseClicked="#goToDashbord" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Dashboard" textFill="WHITE">
+                                    <font><Font size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🏠" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Étudiants -->
+                        <Pane fx:id="etudiantsBtn" onMouseClicked="#goToListeEtudiant" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: rgba(255,255,255,0.15); -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item active">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Étudiants" textFill="WHITE">
+                                    <font><Font name="System Bold" size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🎓" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Filières -->
+                        <Pane fx:id="filieresBtn" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Filières" textFill="WHITE">
+                                    <font><Font size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📚" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Ressortissants -->
+                        <Pane fx:id="ressortissantsBtn" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Ressortissants" textFill="WHITE">
+                                    <font><Font size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🌍" textFill="WHITE" />
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+
+                <!-- Logout Button -->
+                <Pane fx:id="logoutBtn" layoutX="38.0" layoutY="673.0" prefHeight="50.0" prefWidth="148.0" style="-fx-background-color: #dc3545; -fx-background-radius: 8; -fx-cursor: hand;">
+                    <children>
+                        <Label layoutX="26.0" layoutY="14.0" text="Déconnexion" textFill="WHITE">
+                            <font><Font name="System Bold" size="16.0" /></font>
+                        </Label>
+                        <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🚪" textFill="WHITE" />
+                    </children>
+                </Pane>
+            </children>
+        </Pane>
+      <Pane fx:id="chilFenetre" prefHeight="837.0" prefWidth="1265.0" />
+
+
+
+        <!-- Main Content Area -->
+
+    </children>
+</HBox>

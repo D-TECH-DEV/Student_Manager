@@ -1,16 +1,17 @@
 package com.pigier.pigieretudiant.utils;
 
-import javafx.animation.PauseTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Stack;
 
 public class SceneUtils {
 
@@ -44,6 +45,15 @@ public class SceneUtils {
     public static void closeModal(javafx.event.ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    public static void changeChild(StackPane chilFenetre, String fxmlPath) {
+        try {
+            Node nouveauContenu = FXMLLoader.load(Objects.requireNonNull(SceneUtils.class.getResource(fxmlPath)));
+            chilFenetre.getChildren().setAll(nouveauContenu); // remplace tout le contenu
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

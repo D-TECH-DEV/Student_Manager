@@ -53,45 +53,26 @@ public class EtudiantController {
     }
 
     public void createEtudiant(ActionEvent event) {
-        try {
-            // Validation des champs
-            if (nomEtudiant.getText().isEmpty() || prenomsEtudiant.getText().isEmpty() ||
-                    matriculeEtudiant.getText().isEmpty() || lieuxNaissanceEtudiant.getText().isEmpty() ||
-                    contactEtudiant.getText().isEmpty() || emailEtudiant.getText().isEmpty() ||
-                    nationnaliteEtudiant.getText().isEmpty()) {
 
-                erreurLabel.setText("Tous les champs doivent être remplis.");
-                return;
-            }
-
-            // Création de l'objet
-            Etudiant etudiant = new Etudiant(
-                    nomEtudiant.getText(),
-                    prenomsEtudiant.getText(),
-                    matriculeEtudiant.getText(),
-                    dateNaissanceEtudiant.getValue().toString(),
-                    lieuxNaissanceEtudiant.getText(),
-                    'M', // À rendre dynamique selon une sélection radio par exemple
-                    contactEtudiant.getText(),
-                    emailEtudiant.getText(),
-                    nationnaliteEtudiant.getText()
-            );
-
-            etudiant.create();
-            successLabel.setText("Étudiant créé avec succès !");
-            erreurLabel.setText("");
-
-        } catch (SQLIntegrityConstraintViolationException e) {
-            erreurLabel.setText("Erreur : doublon de matricule ou email !");
-        } catch (SQLException e) {
-            erreurLabel.setText("Erreur SQL : " + e.getMessage());
-        } catch (Exception e) {
-            erreurLabel.setText("Erreur inattendue : " + e.getMessage());
-        }
     }
 
 
     public void cancelCreatEtudiant(ActionEvent event) throws IOException {
         SceneUtils.closeModal(event);
+    }
+
+    public void filterByFiliere(ActionEvent event) {
+    }
+
+    public void refreshData(ActionEvent event) {
+    }
+
+    public void exportData(ActionEvent event) {
+    }
+
+    public void handleSearch(ActionEvent event) {
+    }
+
+    public void filterAllFilieres(ActionEvent event) {
     }
 }
