@@ -23,6 +23,5 @@ module com.pigier.pigieretudiant {
     requires java.desktop;
     exports com.pigier.pigieretudiant.utils;
     exports com.pigier.pigieretudiant.controllers;
-
-
+    exports com.pigier.pigieretudiant.models;
 }

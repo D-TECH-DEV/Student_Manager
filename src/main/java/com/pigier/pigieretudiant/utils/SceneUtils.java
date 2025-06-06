@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -51,6 +52,15 @@ public class SceneUtils {
         try {
             Node nouveauContenu = FXMLLoader.load(Objects.requireNonNull(SceneUtils.class.getResource(fxmlPath)));
             chilFenetre.getChildren().setAll(nouveauContenu); // remplace tout le contenu
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void changeChild(String pathChild, Pane childFenetre){
+        try {
+            Node nouveauContenu = FXMLLoader.load(Objects.requireNonNull(SceneUtils.class.getResource(pathChild)));
+            childFenetre.getChildren().setAll(nouveauContenu);
         } catch (IOException e) {
             e.printStackTrace();
         }

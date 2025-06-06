@@ -12,7 +12,8 @@ public class DatabaseConnection {
     private static final String USER = InfoSensible.userNameServer;
     private static final String PASSWORD = InfoSensible.userPasswordServer;
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+//        Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }

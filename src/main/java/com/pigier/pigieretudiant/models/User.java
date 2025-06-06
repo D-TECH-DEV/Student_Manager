@@ -32,7 +32,7 @@ public class User {
 
             stmt.executeUpdate(); // exécute l'insertion
 
-        } catch (SQLException e) {
+        }catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -56,7 +56,7 @@ public class User {
             }
 
             return "OK";
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             throw new RuntimeException(ex);
         }
     }

@@ -1,44 +1,30 @@
 package com.pigier.pigieretudiant.controllers;
 
+import com.pigier.pigieretudiant.models.Etudiant;
 import com.pigier.pigieretudiant.utils.SceneUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class MainController {
     @FXML
-    private Pane chilFenetre; // correspond à ton fx:id dans le fichier parent
+    private Pane chilFenetre;
 
-    public void initialize() {
-        try {
-            Node nouveauContenu = FXMLLoader.load(Objects.requireNonNull(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/dashbord.fxml")));
-            chilFenetre.getChildren().setAll(nouveauContenu); // remplace tout le contenu
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void initialize() throws SQLException, ClassNotFoundException {
+        goToDashbord();
+//        System.out.println(Etudiant.getAll());
     }
 
     public void goToDashbord() {
-        try {
-            Node nouveauContenu = FXMLLoader.load(Objects.requireNonNull(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/dashbord.fxml")));
-            chilFenetre.getChildren().setAll(nouveauContenu); // remplace tout le contenu
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneUtils.changeChild( "/com/pigier/pigieretudiant/views/dashbord.fxml" ,chilFenetre);
     }
 
     public void goToListeEtudiant() {
-        try {
-            Node nouveauContenu = FXMLLoader.load(Objects.requireNonNull(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/etudiant/list.fxml")));
-            chilFenetre.getChildren().setAll(nouveauContenu); // remplace tout le contenu
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        SceneUtils.changeChild( "/com/pigier/pigieretudiant/views/etudiant/list.fxml" ,chilFenetre);
     }
 }
