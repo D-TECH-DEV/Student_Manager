@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,11 +39,13 @@ public class EtudiantController {
     @FXML private TableColumn<Etudiant, String> colMatricule;
     @FXML private TableColumn<Etudiant, String> colFiliere;
     @FXML private TableColumn<Etudiant, String> colNiveau;
+    @FXML private TableColumn<Etudiant, Void> colActions;
     @FXML private ComboBox<String> filterFiliere;
     @FXML private ComboBox<String> filterNiveaux;
     @FXML private TextField searchField;
 
     private ObservableList<Etudiant> etudiantsList = FXCollections.observableArrayList();
+    private Etudiant selectedEtudiant;
 
     public void initialize() throws SQLException {
         if (tableEtudiants != null && colNom != null) {
@@ -62,19 +66,15 @@ public class EtudiantController {
 
         if (filterFiliere != null) {
             filterFiliere.getItems().add("Toutes les filières");
-//            filterFiliere.getItems().add("Toutes");
-
-            filterFiliere.getItems().addAll( Filiere.getListe());
+            filterFiliere.getItems().addAll(Filiere.getListe());
             filterFiliere.setValue("Toutes les filières");
-//            filterFiliere.setValue("Toutes");
-
         }
+        
         if (filterNiveaux != null) {
             filterNiveaux.getItems().add("Tous les niveaux");
-            filterNiveaux.getItems().addAll( Niveaux.getListe());
+            filterNiveaux.getItems().addAll(Niveaux.getListe());
             filterNiveaux.setValue("Tous les niveaux");
         }
-
 
         if (tableEtudiants != null) {
             refreshData(null);
@@ -86,73 +86,174 @@ public class EtudiantController {
         colPrenoms.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         colMatricule.setCellValueFactory(new PropertyValueFactory<>("matricule"));
         colFiliere.setCellValueFactory(new PropertyValueFactory<>("filiere"));
-        colFiliere.setCellValueFactory(new PropertyValueFactory<>("niveau"));
+        colNiveau.setCellValueFactory(new PropertyValueFactory<>("niveau"));
 
+        // Ajouter les boutons d'action
+        addActionButtonsToTable();
+        
+        // Ajouter un listener pour la sélection
+        tableEtudiants.getSelectionModel().selectedItemProperty().addListener(
+            (obs, oldSelection, newSelection) -> {
+                selectedEtudiant = newSelection;
+            }
+        );
+    }
+
+    private void addActionButtonsToTable() {
+        Callback<TableColumn<Etudiant, Void>, TableCell<Etudiant, Void>> cellFactory = 
+            new Callback<TableColumn<Etudiant, Void>, TableCell<Etudiant, Void>>() {
+                @Override
+                public TableCell<Etudiant, Void> call(final TableColumn<Etudiant, Void> param) {
+                    final TableCell<Etudiant, Void> cell = new TableCell<Etudiant, Void>() {
+
+                        private final Button editBtn = new Button("Modifier");
+                        private final Button deleteBtn = new Button("Supprimer");
+
+                        {
+                            editBtn.setStyle("-fx-background-color: #4361ee; -fx-text-fill: white; -fx-background-radius: 5;");
+                            deleteBtn.setStyle("-fx-background-color: #dc3545; -fx-text-fill: white; -fx-background-radius: 5;");
+                            
+                            editBtn.setOnAction((ActionEvent event) -> {
+                                Etudiant etudiant = getTableView().getItems().get(getIndex());
+                                editEtudiant(etudiant);
+                            });
+                            
+                            deleteBtn.setOnAction((ActionEvent event) -> {
+                                Etudiant etudiant = getTableView().getItems().get(getIndex());
+                                deleteEtudiant(etudiant);
+                            });
+                        }
+
+                        @Override
+                        public void updateItem(Void item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setGraphic(null);
+                            } else {
+                                javafx.scene.layout.HBox hbox = new javafx.scene.layout.HBox(5);
+                                hbox.getChildren().addAll(editBtn, deleteBtn);
+                                setGraphic(hbox);
+                            }
+                        }
+                    };
+                    return cell;
+                }
+            };
+
+        colActions.setCellFactory(cellFactory);
     }
 
     public void showInfoPersonnelle() {
+        // Méthode pour afficher les informations personnelles
     }
 
-    public void editEtudiant() {
-        Etudiant etudiant = new Etudiant("Youssouf", "DOUMDJE", "0501730", "2004-06-01", "DOBA", 'M', "0789681613", "dydoumdje2004@gmail.com", "Tchadienne");
+    public void editEtudiant(Etudiant etudiant) {
+        if (etudiant == null) return;
+        
+        try {
+            // Charger le formulaire d'édition avec les données de l'étudiant
+            if (nomEtudiant != null) nomEtudiant.setText(etudiant.getNom());
+            if (prenomsEtudiant != null) prenomsEtudiant.setText(etudiant.getPrenom());
+            if (matriculeEtudiant != null) matriculeEtudiant.setText(etudiant.getMatricule());
+            if (lieuxNaissanceEtudiant != null) lieuxNaissanceEtudiant.setText(etudiant.getLieuxNaissance());
+            if (dateNaissanceEtudiant != null && etudiant.getDateNaissance() != null) {
+                dateNaissanceEtudiant.setValue(java.time.LocalDate.parse(etudiant.getDateNaissance()));
+            }
+            if (genreEtudiant != null) genreEtudiant.setValue(etudiant.getGenre());
+            if (contactEtudiant != null) contactEtudiant.setText(etudiant.getContact());
+            if (emailEtudiant != null) emailEtudiant.setText(etudiant.getEmail());
+            if (nationnaliteEtudiant != null) nationnaliteEtudiant.setText(etudiant.getNationalite());
+            if (filierEtudiant != null) filierEtudiant.setValue(etudiant.getFiliere());
+            
+            selectedEtudiant = etudiant;
+            
+            // Ouvrir le modal d'édition
+            SceneUtils.openModal("/com/pigier/pigieretudiant/views/etudiant/create.fxml");
+        } catch (Exception e) {
+            showError("Erreur lors du chargement des données: " + e.getMessage());
+        }
+    }
 
-        if (nomEtudiant != null) nomEtudiant.setText(etudiant.getNom());
-        if (prenomsEtudiant != null) prenomsEtudiant.setText(etudiant.getPrenom());
-        if (matriculeEtudiant != null) matriculeEtudiant.setText(etudiant.getMatricule());
-        if (lieuxNaissanceEtudiant != null) lieuxNaissanceEtudiant.setText(etudiant.getLieuxNaissance());
-        if (dateNaissanceEtudiant != null) dateNaissanceEtudiant.setValue(java.time.LocalDate.parse(etudiant.getDateNaissance()));
-        if (genreEtudiant != null) genreEtudiant.setValue(String.valueOf(etudiant.getGenre()));
-        if (contactEtudiant != null) contactEtudiant.setText(etudiant.getContact());
-        if (emailEtudiant != null) emailEtudiant.setText(etudiant.getEmail());
-        if (nationnaliteEtudiant != null) nationnaliteEtudiant.setText(etudiant.getNationnalite());
+    private void deleteEtudiant(Etudiant etudiant) {
+        if (etudiant == null) return;
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Supprimer l'étudiant");
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer " + etudiant.getNom() + " " + etudiant.getPrenom() + " ?");
+        
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    etudiant.delete();
+                    refreshData(null);
+                    showSuccess("Étudiant supprimé avec succès!");
+                } catch (Exception e) {
+                    showError("Erreur lors de la suppression: " + e.getMessage());
+                }
+            }
+        });
     }
 
     @FXML
     public void addEtudiant() throws IOException {
+        clearForm();
+        selectedEtudiant = null;
         SceneUtils.openModal("/com/pigier/pigieretudiant/views/etudiant/create.fxml");
     }
 
     public void createEtudiant(ActionEvent event) {
         try {
             if (isFormValid()) {
-                Etudiant nouvelEtudiant = new Etudiant(
-                        nomEtudiant.getText().trim(),
-                        prenomsEtudiant.getText().trim(),
-                        matriculeEtudiant.getText().trim(),
-                        dateNaissanceEtudiant.getValue() != null ? dateNaissanceEtudiant.getValue().toString() : "",
-                        lieuxNaissanceEtudiant.getText().trim(),
-                        genreEtudiant.getValue() != null ? genreEtudiant.getValue().charAt(0) : ' ',
-                        contactEtudiant.getText().trim(),
-                        emailEtudiant.getText().trim(),
-                        nationnaliteEtudiant.getText().trim()
-                );
+                if (selectedEtudiant == null) {
+                    // Création d'un nouveau étudiant
+                    Etudiant nouvelEtudiant = new Etudiant(
+                            nomEtudiant.getText().trim(),
+                            prenomsEtudiant.getText().trim(),
+                            matriculeEtudiant.getText().trim(),
+                            dateNaissanceEtudiant.getValue() != null ? dateNaissanceEtudiant.getValue().toString() : "",
+                            lieuxNaissanceEtudiant.getText().trim(),
+                            genreEtudiant.getValue() != null ? genreEtudiant.getValue().charAt(0) : ' ',
+                            contactEtudiant.getText().trim(),
+                            emailEtudiant.getText().trim(),
+                            nationnaliteEtudiant.getText().trim()
+                    );
 
-                if (filierEtudiant.getValue() != null) {
-                    nouvelEtudiant.setFiliere(filierEtudiant.getValue());
-                }
+                    if (filierEtudiant.getValue() != null) {
+                        nouvelEtudiant.setFiliere(filierEtudiant.getValue());
+                    }
 
-                nouvelEtudiant.create("1");
+                    nouvelEtudiant.create("1");
+                    showSuccess("Étudiant créé avec succès!");
+                } else {
+                    // Mise à jour d'un étudiant existant
+                    selectedEtudiant.setNom(nomEtudiant.getText().trim());
+                    selectedEtudiant.setPrenom(prenomsEtudiant.getText().trim());
+                    selectedEtudiant.setMatricule(matriculeEtudiant.getText().trim());
+                    selectedEtudiant.setDateNaissance(dateNaissanceEtudiant.getValue() != null ? 
+                        dateNaissanceEtudiant.getValue().toString() : "");
+                    selectedEtudiant.setLieuxNaissance(lieuxNaissanceEtudiant.getText().trim());
+                    selectedEtudiant.setGenre(genreEtudiant.getValue() != null ? 
+                        genreEtudiant.getValue().charAt(0) : ' ');
+                    selectedEtudiant.setContact(contactEtudiant.getText().trim());
+                    selectedEtudiant.setEmail(emailEtudiant.getText().trim());
+                    selectedEtudiant.setNationalite(nationnaliteEtudiant.getText().trim());
+                    if (filierEtudiant.getValue() != null) {
+                        selectedEtudiant.setFiliere(filierEtudiant.getValue());
+                    }
 
-                if (successLabel != null) {
-                    successLabel.setText("Étudiant créé avec succès!");
+                    selectedEtudiant.update();
+                    showSuccess("Étudiant modifié avec succès!");
                 }
 
                 clearForm();
-
-                // Actualiser le tableau si présent
-                if (tableEtudiants != null) {
-                    refreshData(null);
-                }
+                refreshData(null);
 
             } else {
-                if (erreurLabel != null) {
-                    erreurLabel.setText("Veuillez remplir tous les champs obligatoires");
-                }
+                showError("Veuillez remplir tous les champs obligatoires");
             }
         } catch (Exception e) {
-            if (erreurLabel != null) {
-                erreurLabel.setText("Erreur lors de la création: " + e.getMessage());
-            }
+            showError("Erreur lors de l'opération: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -175,9 +276,13 @@ public class EtudiantController {
         if (genreEtudiant != null) genreEtudiant.setValue(null);
         if (filierEtudiant != null) filierEtudiant.setValue(null);
         if (niveauEtudiant != null) niveauEtudiant.setValue(null);
+        if (erreurLabel != null) erreurLabel.setText("");
+        if (successLabel != null) successLabel.setText("");
     }
 
     public void cancelCreatEtudiant(ActionEvent event) throws IOException {
+        clearForm();
+        selectedEtudiant = null;
         SceneUtils.closeModal(event);
     }
 
@@ -185,14 +290,32 @@ public class EtudiantController {
         if (filterFiliere == null || tableEtudiants == null) return;
 
         String filiere = filterFiliere.getValue();
-        if (filiere.equals("Toutes les filières")) {
-            tableEtudiants.setItems(etudiantsList);
-        } else {
-            ObservableList<Etudiant> filtered = etudiantsList.filtered(
-                    etudiant -> filiere.equalsIgnoreCase(etudiant.getFiliere())
-            );
-            tableEtudiants.setItems(filtered);
+        String niveau = filterNiveaux != null ? filterNiveaux.getValue() : "Tous les niveaux";
+        
+        applyFilters(filiere, niveau);
+    }
+
+    public void filterByNiveau(ActionEvent event) {
+        if (filterNiveaux == null || tableEtudiants == null) return;
+
+        String niveau = filterNiveaux.getValue();
+        String filiere = filterFiliere != null ? filterFiliere.getValue() : "Toutes les filières";
+        
+        applyFilters(filiere, niveau);
+    }
+
+    private void applyFilters(String filiere, String niveau) {
+        ObservableList<Etudiant> filtered = etudiantsList;
+        
+        if (!filiere.equals("Toutes les filières")) {
+            filtered = filtered.filtered(etudiant -> filiere.equalsIgnoreCase(etudiant.getFiliere()));
         }
+        
+        if (!niveau.equals("Tous les niveaux")) {
+            filtered = filtered.filtered(etudiant -> niveau.equalsIgnoreCase(etudiant.getNiveau()));
+        }
+        
+        tableEtudiants.setItems(filtered);
     }
 
     public void refreshData(ActionEvent event) {
@@ -202,13 +325,9 @@ public class EtudiantController {
             etudiantsList.clear();
             etudiantsList.addAll(Etudiant.getAll());
             tableEtudiants.setItems(etudiantsList);
-            if (successLabel != null) {
-                successLabel.setText("Données actualisées");
-            }
+            showSuccess("Données actualisées");
         } catch (Exception e) {
-            if (erreurLabel != null) {
-                erreurLabel.setText("Erreur de chargement : " + e.getMessage());
-            }
+            showError("Erreur de chargement : " + e.getMessage());
         }
     }
 
@@ -217,23 +336,20 @@ public class EtudiantController {
 
         try {
             FileWriter writer = new FileWriter("etudiants_export.csv");
-            writer.write("Nom,Prenoms,Matricule,Filiere\n");
+            writer.write("Nom,Prenoms,Matricule,Filiere,Niveau\n");
             for (Etudiant etudiant : tableEtudiants.getItems()) {
-                writer.write(String.format("%s,%s,%s,%s\n",
+                writer.write(String.format("%s,%s,%s,%s,%s\n",
                         etudiant.getNom(),
                         etudiant.getPrenom(),
-                        etudiant.getMatricule()
-//                        etudiant.getFiliere()
+                        etudiant.getMatricule(),
+                        etudiant.getFiliere() != null ? etudiant.getFiliere() : "",
+                        etudiant.getNiveau() != null ? etudiant.getNiveau() : ""
                 ));
             }
             writer.close();
-            if (successLabel != null) {
-                successLabel.setText("Export réussi !");
-            }
+            showSuccess("Export réussi !");
         } catch (IOException e) {
-            if (erreurLabel != null) {
-                erreurLabel.setText("Erreur export : " + e.getMessage());
-            }
+            showError("Erreur export : " + e.getMessage());
         }
     }
 
@@ -257,6 +373,27 @@ public class EtudiantController {
         if (filterFiliere == null || tableEtudiants == null) return;
 
         filterFiliere.setValue("Toutes les filières");
+        if (filterNiveaux != null) {
+            filterNiveaux.setValue("Tous les niveaux");
+        }
         tableEtudiants.setItems(etudiantsList);
+    }
+
+    private void showError(String message) {
+        if (erreurLabel != null) {
+            erreurLabel.setText(message);
+        }
+        if (successLabel != null) {
+            successLabel.setText("");
+        }
+    }
+
+    private void showSuccess(String message) {
+        if (successLabel != null) {
+            successLabel.setText(message);
+        }
+        if (erreurLabel != null) {
+            erreurLabel.setText("");
+        }
     }
 }

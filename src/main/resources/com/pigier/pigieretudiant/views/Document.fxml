@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.DocumentController">
+    <children>
+        <!-- Main Content Area -->
+        <Pane prefHeight="900.0" prefWidth="1200.0">
+            <children>
+                <!-- Header -->
+                <Pane prefHeight="60.0" prefWidth="1200.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                    <children>
+                        <Label layoutX="30.0" layoutY="20.0" text="Gestion des Documents" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+
+                <!-- Form Section -->
+                <VBox layoutX="30.0" layoutY="80.0" prefHeight="200.0" prefWidth="1140.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
+                    <children>
+                        <Label text="Ajouter un nouveau document" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Étudiant:" />
+                                        <ComboBox fx:id="etudiantComboBox" prefWidth="200.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Type de document:" />
+                                        <ComboBox fx:id="typeDocumentComboBox" prefWidth="180.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Nom du document:" />
+                                        <TextField fx:id="nomDocumentField" prefWidth="200.0" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Fichier:" />
+                                        <HBox spacing="10.0">
+                                            <children>
+                                                <Button onAction="#choisirFichier" style="-fx-background-color: #6c757d; -fx-text-fill: white;" text="Choisir fichier" />
+                                                <Label fx:id="cheminFichierLabel" text="Aucun fichier sélectionné" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <HBox spacing="10.0">
+                            <children>
+                                <Button onAction="#ajouterDocument" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="Ajouter Document" />
+                                <Label fx:id="messageLabel" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- Table Section -->
+                <VBox layoutX="30.0" layoutY="300.0" prefHeight="550.0" prefWidth="1140.0" spacing="10.0">
+                    <children>
+                        <HBox spacing="10.0">
+                            <children>
+                                <Button onAction="#ouvrirDocument" style="-fx-background-color: #007bff; -fx-text-fill: white;" text="Ouvrir Document" />
+                                <Button onAction="#supprimerDocument" style="-fx-background-color: #dc3545; -fx-text-fill: white;" text="Supprimer Document" />
+                            </children>
+                        </HBox>
+
+                        <TableView fx:id="documentsTable" prefHeight="500.0" prefWidth="1140.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colNomDocument" prefWidth="250.0" text="Nom du Document" />
+                                <TableColumn fx:id="colTypeDocument" prefWidth="150.0" text="Type" />
+                                <TableColumn fx:id="colEtudiant" prefWidth="200.0" text="Étudiant" />
+                                <TableColumn fx:id="colDateAjout" prefWidth="150.0" text="Date d'ajout" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</Pane>

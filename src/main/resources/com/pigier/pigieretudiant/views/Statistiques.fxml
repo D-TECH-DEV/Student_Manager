@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.StatistiquesController">
+   <children>
+      <!-- Main Content Area -->
+      <Pane prefHeight="837.0" prefWidth="1100.0">
+         <children>
+            <!-- Header -->
+            <Pane prefHeight="60.0" prefWidth="1100.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+               <children>
+                  <Label layoutX="30.0" layoutY="20.0" text="Statistiques" textFill="#2c3e50">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+
+            <!-- Statistics Cards -->
+            <HBox layoutX="50.0" layoutY="89.0" prefHeight="160.0" spacing="20.0">
+               <!-- Total Students Card -->
+               <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <children>
+                     <Label layoutX="20.0" layoutY="20.0" text="TOTAL ÉTUDIANTS" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="totalEtudiants" layoutX="20.0" layoutY="50.0" text="0" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="32.0" />
+                        </font>
+                     </Label>
+                     <Pane layoutX="20.0" layoutY="100.0" prefHeight="50.0" prefWidth="190.0">
+                        <children>
+                           <Label layoutX="10.0" layoutY="5.0" text="HOMMES" textFill="WHITE">
+                              <font>
+                                 <Font size="12.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="totalHommes" layoutX="10.0" layoutY="25.0" text="0" textFill="WHITE">
+                              <font>
+                                 <Font size="15.0" />
+                              </font>
+                           </Label>
+                           <Label layoutX="100.0" layoutY="5.0" text="FEMMES" textFill="WHITE">
+                              <font>
+                                 <Font size="12.0" />
+                              </font>
+                           </Label>
+                           <Label fx:id="totalFemmes" layoutX="100.0" layoutY="25.0" text="0" textFill="WHITE">
+                              <font>
+                                 <Font size="15.0" />
+                              </font>
+                           </Label>
+                        </children>
+                     </Pane>
+                  </children>
+               </Pane>
+
+               <!-- L1 Students Card -->
+               <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #28a745, #20c997); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <children>
+                     <Label layoutX="20.0" layoutY="20.0" text="NIVEAU L1" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="totalL1" layoutX="20.0" layoutY="50.0" text="0" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="32.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </Pane>
+
+               <!-- L2 Students Card -->
+               <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #ffc107, #fd7e14); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <children>
+                     <Label layoutX="20.0" layoutY="20.0" text="NIVEAU L2" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="totalL2" layoutX="20.0" layoutY="50.0" text="0" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="32.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </Pane>
+
+               <!-- L3 Students Card -->
+               <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #dc3545, #e83e8c); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <children>
+                     <Label layoutX="20.0" layoutY="20.0" text="NIVEAU L3" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="14.0" />
+                        </font>
+                     </Label>
+                     <Label fx:id="totalL3" layoutX="20.0" layoutY="50.0" text="0" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold" size="32.0" />
+                        </font>
+                     </Label>
+                  </children>
+               </Pane>
+            </HBox>
+
+            <!-- Charts Section -->
+            <HBox layoutX="50.0" layoutY="285.0" spacing="30.0">
+               <!-- Bar Chart Section -->
+               <Pane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 4);">
+                  <children>
+                     <Label layoutX="20.0" layoutY="15.0" text="Statistiques par filière et genre" textFill="#2c3e50">
+                        <font>
+                           <Font name="System Bold" size="16.0" />
+                        </font>
+                     </Label>
+                     <BarChart fx:id="barChart" layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="460.0">
+                        <xAxis>
+                           <CategoryAxis side="BOTTOM" />
+                        </xAxis>
+                        <yAxis>
+                           <NumberAxis side="LEFT" />
+                        </yAxis>
+                     </BarChart>
+                  </children>
+               </Pane>
+
+               <!-- Pie Chart Section -->
+               <Pane prefHeight="400.0" prefWidth="440.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 4);">
+                  <children>
+                     <Label layoutX="20.0" layoutY="15.0" text="Répartition par Filière" textFill="#2c3e50">
+                        <font>
+                           <Font name="System Bold" size="16.0" />
+                        </font>
+                     </Label>
+                     <PieChart fx:id="pieChart" layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="400.0" />
+                  </children>
+               </Pane>
+            </HBox>
+         </children>
+      </Pane>
+   </children>
+</Pane>
