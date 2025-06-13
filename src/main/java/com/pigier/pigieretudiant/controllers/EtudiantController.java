@@ -4,6 +4,8 @@ import com.pigier.pigieretudiant.models.Etudiant;
 import com.pigier.pigieretudiant.models.Filiere;
 import com.pigier.pigieretudiant.models.Niveaux;
 import com.pigier.pigieretudiant.utils.SceneUtils;
+import com.pigier.pigieretudiant.utils.ValidationUtils;
+import com.pigier.pigieretudiant.utils.ExportUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -204,64 +205,68 @@ public class EtudiantController {
 
     public void createEtudiant(ActionEvent event) {
         try {
-            if (isFormValid()) {
-                if (selectedEtudiant == null) {
-                    // Création d'un nouveau étudiant
-                    Etudiant nouvelEtudiant = new Etudiant(
-                            nomEtudiant.getText().trim(),
-                            prenomsEtudiant.getText().trim(),
-                            matriculeEtudiant.getText().trim(),
-                            dateNaissanceEtudiant.getValue() != null ? dateNaissanceEtudiant.getValue().toString() : "",
-                            lieuxNaissanceEtudiant.getText().trim(),
-                            genreEtudiant.getValue() != null ? genreEtudiant.getValue().charAt(0) : ' ',
-                            contactEtudiant.getText().trim(),
-                            emailEtudiant.getText().trim(),
-                            nationnaliteEtudiant.getText().trim()
-                    );
+            // Validation des données
+            ValidationUtils.ValidationResult validation = ValidationUtils.validateEtudiant(
+                nomEtudiant.getText(),
+                prenomsEtudiant.getText(),
+                matriculeEtudiant.getText(),
+                emailEtudiant.getText(),
+                contactEtudiant.getText()
+            );
 
-                    if (filierEtudiant.getValue() != null) {
-                        nouvelEtudiant.setFiliere(filierEtudiant.getValue());
-                    }
+            if (!validation.isValid()) {
+                showError(validation.getMessage());
+                return;
+            }
 
-                    nouvelEtudiant.create("1");
-                    showSuccess("Étudiant créé avec succès!");
-                } else {
-                    // Mise à jour d'un étudiant existant
-                    selectedEtudiant.setNom(nomEtudiant.getText().trim());
-                    selectedEtudiant.setPrenom(prenomsEtudiant.getText().trim());
-                    selectedEtudiant.setMatricule(matriculeEtudiant.getText().trim());
-                    selectedEtudiant.setDateNaissance(dateNaissanceEtudiant.getValue() != null ? 
-                        dateNaissanceEtudiant.getValue().toString() : "");
-                    selectedEtudiant.setLieuxNaissance(lieuxNaissanceEtudiant.getText().trim());
-                    selectedEtudiant.setGenre(genreEtudiant.getValue() != null ? 
-                        genreEtudiant.getValue().charAt(0) : ' ');
-                    selectedEtudiant.setContact(contactEtudiant.getText().trim());
-                    selectedEtudiant.setEmail(emailEtudiant.getText().trim());
-                    selectedEtudiant.setNationalite(nationnaliteEtudiant.getText().trim());
-                    if (filierEtudiant.getValue() != null) {
-                        selectedEtudiant.setFiliere(filierEtudiant.getValue());
-                    }
+            if (selectedEtudiant == null) {
+                // Création d'un nouveau étudiant
+                Etudiant nouvelEtudiant = new Etudiant(
+                        nomEtudiant.getText().trim(),
+                        prenomsEtudiant.getText().trim(),
+                        ValidationUtils.formatMatricule(matriculeEtudiant.getText()),
+                        dateNaissanceEtudiant.getValue() != null ? dateNaissanceEtudiant.getValue().toString() : "",
+                        lieuxNaissanceEtudiant.getText().trim(),
+                        genreEtudiant.getValue() != null ? genreEtudiant.getValue().charAt(0) : ' ',
+                        ValidationUtils.formatPhone(contactEtudiant.getText()),
+                        emailEtudiant.getText().trim(),
+                        nationnaliteEtudiant.getText().trim()
+                );
 
-                    selectedEtudiant.update();
-                    showSuccess("Étudiant modifié avec succès!");
+                if (filierEtudiant.getValue() != null) {
+                    nouvelEtudiant.setFiliere(filierEtudiant.getValue());
                 }
 
-                clearForm();
-                refreshData(null);
-
+                nouvelEtudiant.create("1");
+                showSuccess("Étudiant créé avec succès!");
             } else {
-                showError("Veuillez remplir tous les champs obligatoires");
+                // Mise à jour d'un étudiant existant
+                selectedEtudiant.setNom(nomEtudiant.getText().trim());
+                selectedEtudiant.setPrenom(prenomsEtudiant.getText().trim());
+                selectedEtudiant.setMatricule(ValidationUtils.formatMatricule(matriculeEtudiant.getText()));
+                selectedEtudiant.setDateNaissance(dateNaissanceEtudiant.getValue() != null ? 
+                    dateNaissanceEtudiant.getValue().toString() : "");
+                selectedEtudiant.setLieuxNaissance(lieuxNaissanceEtudiant.getText().trim());
+                selectedEtudiant.setGenre(genreEtudiant.getValue() != null ? 
+                    genreEtudiant.getValue().charAt(0) : ' ');
+                selectedEtudiant.setContact(ValidationUtils.formatPhone(contactEtudiant.getText()));
+                selectedEtudiant.setEmail(emailEtudiant.getText().trim());
+                selectedEtudiant.setNationalite(nationnaliteEtudiant.getText().trim());
+                if (filierEtudiant.getValue() != null) {
+                    selectedEtudiant.setFiliere(filierEtudiant.getValue());
+                }
+
+                selectedEtudiant.update();
+                showSuccess("Étudiant modifié avec succès!");
             }
+
+            clearForm();
+            refreshData(null);
+
         } catch (Exception e) {
             showError("Erreur lors de l'opération: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    private boolean isFormValid() {
-        return nomEtudiant != null && !nomEtudiant.getText().trim().isEmpty() &&
-                prenomsEtudiant != null && !prenomsEtudiant.getText().trim().isEmpty() &&
-                matriculeEtudiant != null && !matriculeEtudiant.getText().trim().isEmpty();
     }
 
     private void clearForm() {
@@ -335,18 +340,7 @@ public class EtudiantController {
         if (tableEtudiants == null) return;
 
         try {
-            FileWriter writer = new FileWriter("etudiants_export.csv");
-            writer.write("Nom,Prenoms,Matricule,Filiere,Niveau\n");
-            for (Etudiant etudiant : tableEtudiants.getItems()) {
-                writer.write(String.format("%s,%s,%s,%s,%s\n",
-                        etudiant.getNom(),
-                        etudiant.getPrenom(),
-                        etudiant.getMatricule(),
-                        etudiant.getFiliere() != null ? etudiant.getFiliere() : "",
-                        etudiant.getNiveau() != null ? etudiant.getNiveau() : ""
-                ));
-            }
-            writer.close();
+            ExportUtils.exportEtudiantsToCSV(tableEtudiants.getItems(), tableEtudiants.getScene().getWindow());
             showSuccess("Export réussi !");
         } catch (IOException e) {
             showError("Erreur export : " + e.getMessage());

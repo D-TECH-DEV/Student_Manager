@@ -36,8 +36,7 @@ public class MainController {
 
     @FXML
     public void goToFilieres() {
-        // À implémenter selon vos besoins
-        System.out.println("Navigation vers Filières");
+        SceneUtils.changeChild("/com/pigier/pigieretudiant/views/Filieres.fxml", chilFenetre);
     }
 
     @FXML

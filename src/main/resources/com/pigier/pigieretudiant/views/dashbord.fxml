@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.EtudiantController">
+<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.DashboardController">
    <children>
 
                <!-- Main Content Area -->
@@ -41,14 +41,14 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="13.0" layoutY="46.0" text="1,234" textFill="WHITE">
+                        <Label fx:id="totalEtudiants" layoutX="13.0" layoutY="46.0" text="0" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
                         <Pane layoutX="12.0" layoutY="96.0" prefHeight="60.0" prefWidth="176.0">
                            <children>
-                              <Label layoutX="126.0" layoutY="36.0" text="80" textFill="WHITE">
+                              <Label fx:id="totalFemmes" layoutX="126.0" layoutY="36.0" text="0" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -58,7 +58,7 @@
                                     <Font size="12.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="39.0" layoutY="36.0" text="80" textFill="WHITE">
+                              <Label fx:id="totalHommes" layoutX="39.0" layoutY="36.0" text="0" textFill="WHITE">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -74,7 +74,7 @@
                   </Pane>
 
                         <!-- L1 Students Card -->
-                  <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #28a745, #20c997); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
                      <children>
                         <Label layoutX="20.0" layoutY="20.0" text="🎯" textFill="WHITE">
                            <font>
@@ -86,130 +86,43 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="21.0" layoutY="61.0" text="456" textFill="WHITE">
+                        <Label fx:id="totalL1" layoutX="21.0" layoutY="61.0" text="0" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label layoutX="13.0" layoutY="121.0" text="37% du total" textFill="WHITE">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Pane layoutX="94.0" layoutY="37.0" prefHeight="92.0" prefWidth="128.0">
-                           <children>
-                              <Label layoutX="81.0" layoutY="11.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutY="59.0" text="FEMME" textFill="WHITE">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="81.0" layoutY="57.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutY="13.0" text="HOMMES" textFill="WHITE">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
                      </children>
                   </Pane>
 
                         <!-- L2 Students Card -->
-                  <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #ffc107, #fd7e14); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
                      <children>
-                        <Label layoutX="20.0" layoutY="14.0" text="NIVEAU L2" textFill="WHITE">
+                        <Label layoutX="14.0" layoutY="14.0" text="NIVEAU L2" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="58.0" text="389" textFill="WHITE">
+                        <Label fx:id="totalL2" layoutX="20.0" layoutY="58.0" text="0" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label layoutX="21.0" layoutY="114.0" text="32% du total" textFill="WHITE">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Pane layoutX="91.0" layoutY="35.0" prefHeight="92.0" prefWidth="128.0">
-                           <children>
-                              <Label layoutX="81.0" layoutY="11.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutY="59.0" text="FEMME" textFill="WHITE">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="81.0" layoutY="57.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutY="13.0" text="HOMMES" textFill="WHITE">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
                      </children>
                   </Pane>
 
                         <!-- L3 Students Card -->
-                  <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #4361ee, #3651ce); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
+                  <Pane prefHeight="160.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #dc3545, #e83e8c); -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 8, 0, 0, 4);">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="NIVEAU L3" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label layoutX="14.0" layoutY="58.0" text="389" textFill="WHITE">
+                        <Label fx:id="totalL3" layoutX="14.0" layoutY="58.0" text="0" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
                         </Label>
-                        <Label layoutX="15.0" layoutY="117.0" text="31% du total" textFill="WHITE">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Pane layoutX="85.0" layoutY="34.0" prefHeight="92.0" prefWidth="128.0">
-                           <children>
-                              <Label layoutX="81.0" layoutY="11.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutY="59.0" text="FEMME" textFill="WHITE">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="81.0" layoutY="57.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutY="13.0" text="HOMMES" textFill="WHITE">
-                                 <font>
-                                    <Font size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
                      </children>
                   </Pane>
                </HBox>
@@ -219,12 +132,12 @@
                   <!-- Bar Chart Section -->
                   <Pane prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 8, 0, 0, 4);">
                      <children>
-                        <Label layoutX="20.0" layoutY="15.0" text="Statisque par fillière et genre" textFill="#2c3e50">
+                        <Label layoutX="20.0" layoutY="15.0" text="Statistique par filière et genre" textFill="#2c3e50">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <BarChart layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="460.0">
+                        <BarChart fx:id="barChart" layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="460.0">
                            <xAxis>
                               <CategoryAxis side="BOTTOM" />
                            </xAxis>
@@ -243,7 +156,7 @@
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
-                        <PieChart layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="400.0" />
+                        <PieChart fx:id="pieChart" layoutX="20.0" layoutY="50.0" prefHeight="330.0" prefWidth="400.0" />
                      </children>
                   </Pane>
                </HBox>
