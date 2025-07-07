@@ -1,10 +1,8 @@
 package com.pigier.pigieretudiant.utils;
 
-import com.pigier.pigieretudiant.controllers.UserController;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,20 +21,20 @@ public class SplashScreen extends Application {
         Stage splashStage = new Stage();
         splashStage.initStyle(StageStyle.UNDECORATED);
         splashStage.setScene(splashScene);
+        splashStage.setTitle("Pigier - Chargement");
         splashStage.show();
 
         PauseTransition pause = new PauseTransition(Duration.seconds(3));
         pause.setOnFinished(event -> {
             try {
-//               FXMLLoader fxmlLoader = new FXMLLoader(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/user/login.fxml"));
-                FXMLLoader fxmlLoader = new FXMLLoader(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/MainView.fxml"));
-
+                // Rediriger vers la page de login au lieu du MainView
+                FXMLLoader fxmlLoader = new FXMLLoader(SceneUtils.class.getResource("/com/pigier/pigieretudiant/views/user/login.fxml"));
                 Parent root = fxmlLoader.load();
 
                 Stage newStage = new Stage();
                 newStage.setScene(new Scene(root));
-                newStage.setTitle("Pigier - Login");
-                newStage.setMaximized(true);
+                newStage.setTitle("Pigier - Connexion");
+                newStage.setResizable(false);
                 newStage.show();
                 splashStage.close();
             } catch (Exception e) {

@@ -10,36 +10,120 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="943.0" style="-fx-background-color: #4361ee;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.UserController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right, #4361ee, #3651ce);" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.UserController">
    <children>
-      <Pane layoutX="403.0" layoutY="78.0" prefHeight="504.0" prefWidth="509.0" style="-fx-background-color: #ffffff;">
+      <!-- Card de connexion -->
+      <Pane layoutX="350.0" layoutY="100.0" prefHeight="500.0" prefWidth="450.0" style="-fx-background-color: #ffffff; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 20, 0, 0, 10);">
          <children>
-            <ImageView fitHeight="103.0" fitWidth="331.0" layoutX="120.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <!-- Logo -->
+            <ImageView fitHeight="80.0" fitWidth="200.0" layoutX="125.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assests/images/pigier_logo.jpeg" />
                </image>
             </ImageView>
-            <Button layoutX="89.0" layoutY="354.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="41.0" prefWidth="284.0" style="-fx-background-color: #4361ee;" text="CONNEXION" textFill="WHITE">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <TextField fx:id="emailLogin" layoutX="87.0" layoutY="180.0" prefHeight="41.0" prefWidth="284.0" />
-            <Label layoutX="87.0" layoutY="151.0" prefHeight="18.0" prefWidth="38.0" text="Email" />
-            <Label layoutX="91.0" layoutY="252.0" prefHeight="18.0" prefWidth="89.0" text="Mot de passe" />
-            <PasswordField fx:id="passwordLogin" layoutX="87.0" layoutY="276.0" prefHeight="41.0" prefWidth="284.0" />
-            <Label layoutX="106.0" layoutY="424.0" text="Pas de compte ?" />
-            <Button layoutX="213.0" layoutY="420.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="18.0" prefWidth="105.0" style="-fx-background-color: white;" text="Inscrivez-vous" textFill="#4361ee">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Label fx:id="errorEmail" layoutX="91.0" layoutY="221.0" prefHeight="16.0" prefWidth="118.0" textFill="RED">
+            
+            <!-- Titre -->
+            <Label layoutX="175.0" layoutY="120.0" text="CONNEXION" textFill="#2c3e50">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            
+            <!-- Champ Email -->
+            <Label layoutX="50.0" layoutY="170.0" text="Adresse email" textFill="#495057">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailLogin" layoutX="50.0" layoutY="195.0" onKeyReleased="#validateEmailOnType" prefHeight="45.0" prefWidth="350.0" promptText="votre.email@exemple.com" style="-fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8; -fx-padding: 10;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Label fx:id="errorEmail" layoutX="50.0" layoutY="245.0" prefHeight="20.0" prefWidth="350.0" textFill="#dc3545">
                <font>
                   <Font size="12.0" />
                </font>
             </Label>
-            <Label fx:id="errorPassword" layoutX="87.0" layoutY="317.0" prefHeight="17.0" prefWidth="135.0" textFill="RED">
+            
+            <!-- Champ Mot de passe -->
+            <Label layoutX="50.0" layoutY="270.0" text="Mot de passe" textFill="#495057">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordLogin" layoutX="50.0" layoutY="295.0" prefHeight="45.0" prefWidth="350.0" promptText="Votre mot de passe" style="-fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8; -fx-padding: 10;">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <Label fx:id="errorPassword" layoutX="50.0" layoutY="345.0" prefHeight="20.0" prefWidth="350.0" textFill="#dc3545">
                <font>
                   <Font size="12.0" />
+               </font>
+            </Label>
+            
+            <!-- Message de statut -->
+            <Label fx:id="loginMessage" layoutX="50.0" layoutY="370.0" prefHeight="20.0" prefWidth="350.0" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            
+            <!-- Bouton de connexion -->
+            <Button layoutX="50.0" layoutY="400.0" mnemonicParsing="false" onAction="#onLogin" prefHeight="45.0" prefWidth="350.0" style="-fx-background-color: #4361ee; -fx-background-radius: 8; -fx-cursor: hand;" text="SE CONNECTER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            
+            <!-- Lien vers inscription -->
+            <Label layoutX="140.0" layoutY="460.0" text="Pas encore de compte ?" textFill="#6c757d">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="280.0" layoutY="455.0" mnemonicParsing="false" onAction="#goToRegister" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-cursor: hand;" text="S'inscrire" textFill="#4361ee">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </Pane>
+      
+      <!-- Panneau de bienvenue -->
+      <Pane layoutX="50.0" layoutY="100.0" prefHeight="500.0" prefWidth="280.0">
+         <children>
+            <Label layoutX="20.0" layoutY="100.0" text="Bienvenue sur" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="140.0" text="PIGIER" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="200.0" text="Système de gestion" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="225.0" text="des étudiants" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            
+            <Label layoutX="20.0" layoutY="300.0" prefHeight="120.0" prefWidth="240.0" text="Connectez-vous pour accéder à votre espace de gestion des étudiants, notes, documents et rapports." textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>

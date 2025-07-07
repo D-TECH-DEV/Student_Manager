@@ -1,7 +1,11 @@
 package com.pigier.pigieretudiant.controllers;
 
 import com.pigier.pigieretudiant.utils.SceneUtils;
+import com.pigier.pigieretudiant.utils.SessionManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
 import java.sql.SQLException;
@@ -9,8 +13,16 @@ import java.sql.SQLException;
 public class MainController {
     @FXML
     private Pane chilFenetre;
+    
+    @FXML
+    private Label userNameLabel;
 
     public void initialize() throws SQLException, ClassNotFoundException {
+        // Afficher le nom de l'utilisateur connecté
+        if (userNameLabel != null) {
+            userNameLabel.setText(SessionManager.getInstance().getCurrentUserName());
+        }
+        
         goToDashbord();
     }
 
@@ -62,10 +74,23 @@ public class MainController {
 
     @FXML
     public void logout() {
-        try {
-            SceneUtils.openPage(chilFenetre, "/com/pigier/pigieretudiant/views/user/login.fxml", "Login");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Déconnexion");
+        alert.setHeaderText("Confirmer la déconnexion");
+        alert.setContentText("Êtes-vous sûr de vouloir vous déconnecter ?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    // Déconnecter l'utilisateur
+                    SessionManager.getInstance().logout();
+                    
+                    // Rediriger vers la page de login
+                    SceneUtils.openPage(chilFenetre, "/com/pigier/pigieretudiant/views/user/login.fxml", "Connexion");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
