@@ -2,6 +2,7 @@ package com.pigier.pigieretudiant.controllers;
 
 import com.pigier.pigieretudiant.models.Document;
 import com.pigier.pigieretudiant.models.Etudiant;
+import com.pigier.pigieretudiant.models.TypeDocument;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,11 +18,9 @@ import java.util.List;
 public class DocumentController {
 
     @FXML private ComboBox<Etudiant> etudiantComboBox;
-    @FXML private ComboBox<String> typeDocumentComboBox;
-    @FXML private TextField nomDocumentField;
+    @FXML private ComboBox<TypeDocument> typeDocumentComboBox;
     @FXML private Label cheminFichierLabel;
     @FXML private TableView<Document> documentsTable;
-    @FXML private TableColumn<Document, String> colNomDocument;
     @FXML private TableColumn<Document, String> colTypeDocument;
     @FXML private TableColumn<Document, String> colEtudiant;
     @FXML private TableColumn<Document, String> colDateAjout;
@@ -45,20 +44,13 @@ public class DocumentController {
         List<Etudiant> etudiants = Etudiant.getAll();
         etudiantComboBox.setItems(FXCollections.observableArrayList(etudiants));
 
-        // Types de documents
-        typeDocumentComboBox.setItems(FXCollections.observableArrayList(
-            "Acte de naissance",
-            "Diplôme BAC",
-            "Relevé de notes",
-            "Photo d'identité",
-            "Certificat médical",
-            "Autre"
-        ));
+        // Charger les types de documents
+        List<TypeDocument> types = TypeDocument.getAll();
+        typeDocumentComboBox.setItems(FXCollections.observableArrayList(types));
     }
 
     private void initializeTable() {
-        colNomDocument.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        colTypeDocument.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colTypeDocument.setCellValueFactory(new PropertyValueFactory<>("typeDocumentLibelle"));
         colEtudiant.setCellValueFactory(new PropertyValueFactory<>("etudiantNom"));
         colDateAjout.setCellValueFactory(new PropertyValueFactory<>("dateAjout"));
     }
@@ -85,9 +77,8 @@ public class DocumentController {
         try {
             if (isFormValid()) {
                 Document document = new Document(
-                    nomDocumentField.getText().trim(),
-                    typeDocumentComboBox.getValue(),
                     etudiantComboBox.getValue().getId(),
+                    typeDocumentComboBox.getValue().getId(),
                     selectedFile.getAbsolutePath()
                 );
 
@@ -138,7 +129,7 @@ public class DocumentController {
         }
 
         try {
-            File file = new File(selectedDocument.getCheminFichier());
+            File file = new File(selectedDocument.getFichier());
             if (file.exists()) {
                 java.awt.Desktop.getDesktop().open(file);
             } else {
@@ -160,14 +151,12 @@ public class DocumentController {
     }
 
     private boolean isFormValid() {
-        return nomDocumentField.getText() != null && !nomDocumentField.getText().trim().isEmpty() &&
-               typeDocumentComboBox.getValue() != null &&
+        return typeDocumentComboBox.getValue() != null &&
                etudiantComboBox.getValue() != null &&
                selectedFile != null;
     }
 
     private void clearForm() {
-        nomDocumentField.clear();
         typeDocumentComboBox.setValue(null);
         etudiantComboBox.setValue(null);
         cheminFichierLabel.setText("Aucun fichier sélectionné");

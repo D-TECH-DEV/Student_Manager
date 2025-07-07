@@ -3,48 +3,46 @@ package com.pigier.pigieretudiant.models;
 import com.pigier.pigieretudiant.config.DatabaseConnection;
 
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Document {
     private int id;
-    private String nom;
-    private String type;
     private int etudiantId;
+    private int typeDocumentId;
     private String etudiantNom;
-    private String cheminFichier;
-    private LocalDateTime dateAjout;
+    private String typeDocumentLibelle;
+    private String fichier;
+    private LocalDate dateAjout;
 
-    public Document(String nom, String type, int etudiantId, String cheminFichier) {
-        this.nom = nom;
-        this.type = type;
+    public Document(int etudiantId, int typeDocumentId, String fichier) {
         this.etudiantId = etudiantId;
-        this.cheminFichier = cheminFichier;
-        this.dateAjout = LocalDateTime.now();
+        this.typeDocumentId = typeDocumentId;
+        this.fichier = fichier;
+        this.dateAjout = LocalDate.now();
     }
 
-    public Document(int id, String nom, String type, int etudiantId, String etudiantNom, 
-                   String cheminFichier, LocalDateTime dateAjout) {
+    public Document(int id, int etudiantId, int typeDocumentId, String etudiantNom, 
+                   String typeDocumentLibelle, String fichier, LocalDate dateAjout) {
         this.id = id;
-        this.nom = nom;
-        this.type = type;
         this.etudiantId = etudiantId;
+        this.typeDocumentId = typeDocumentId;
         this.etudiantNom = etudiantNom;
-        this.cheminFichier = cheminFichier;
+        this.typeDocumentLibelle = typeDocumentLibelle;
+        this.fichier = fichier;
         this.dateAjout = dateAjout;
     }
 
     public void create() throws SQLException, ClassNotFoundException {
-        String query = "INSERT INTO documents (nom, type, etudiant_id, chemin_fichier, date_ajout) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO documents (etudiant_id, typedocument_id, fichier, date_ajout) VALUES (?, ?, ?, ?)";
         
         try (Connection conn = DatabaseConnection.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, nom);
-            stmt.setString(2, type);
-            stmt.setInt(3, etudiantId);
-            stmt.setString(4, cheminFichier);
-            stmt.setTimestamp(5, Timestamp.valueOf(dateAjout));
+            stmt.setInt(1, etudiantId);
+            stmt.setInt(2, typeDocumentId);
+            stmt.setString(3, fichier);
+            stmt.setDate(4, Date.valueOf(dateAjout));
             
             int affectedRows = stmt.executeUpdate();
             if (affectedRows > 0) {
@@ -68,10 +66,13 @@ public class Document {
 
     public static List<Document> getAll() throws SQLException, ClassNotFoundException {
         List<Document> documents = new ArrayList<>();
-        String query = "SELECT d.*, CONCAT(e.nom, ' ', e.prenoms) as etudiant_nom " +
-                      "FROM documents d " +
-                      "JOIN etudiants e ON d.etudiant_id = e.id " +
-                      "ORDER BY d.date_ajout DESC";
+        String query = """
+            SELECT d.*, CONCAT(e.nom, ' ', e.prenoms) as etudiant_nom, td.libelle as type_libelle
+            FROM documents d 
+            JOIN etudiants e ON d.etudiant_id = e.id 
+            JOIN typedocuments td ON d.typedocument_id = td.id
+            ORDER BY d.date_ajout DESC
+        """;
         
         try (Connection conn = DatabaseConnection.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -80,12 +81,12 @@ public class Document {
             while (rs.next()) {
                 Document document = new Document(
                     rs.getInt("id"),
-                    rs.getString("nom"),
-                    rs.getString("type"),
                     rs.getInt("etudiant_id"),
+                    rs.getInt("typedocument_id"),
                     rs.getString("etudiant_nom"),
-                    rs.getString("chemin_fichier"),
-                    rs.getTimestamp("date_ajout").toLocalDateTime()
+                    rs.getString("type_libelle"),
+                    rs.getString("fichier"),
+                    rs.getDate("date_ajout").toLocalDate()
                 );
                 documents.add(document);
             }
@@ -96,7 +97,13 @@ public class Document {
 
     public static List<Document> getByEtudiant(int etudiantId) throws SQLException, ClassNotFoundException {
         List<Document> documents = new ArrayList<>();
-        String query = "SELECT * FROM documents WHERE etudiant_id = ? ORDER BY date_ajout DESC";
+        String query = """
+            SELECT d.*, td.libelle as type_libelle
+            FROM documents d 
+            JOIN typedocuments td ON d.typedocument_id = td.id
+            WHERE d.etudiant_id = ? 
+            ORDER BY d.date_ajout DESC
+        """;
         
         try (Connection conn = DatabaseConnection.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -106,12 +113,12 @@ public class Document {
             while (rs.next()) {
                 Document document = new Document(
                     rs.getInt("id"),
-                    rs.getString("nom"),
-                    rs.getString("type"),
                     rs.getInt("etudiant_id"),
+                    rs.getInt("typedocument_id"),
                     "",
-                    rs.getString("chemin_fichier"),
-                    rs.getTimestamp("date_ajout").toLocalDateTime()
+                    rs.getString("type_libelle"),
+                    rs.getString("fichier"),
+                    rs.getDate("date_ajout").toLocalDate()
                 );
                 documents.add(document);
             }
@@ -124,26 +131,26 @@ public class Document {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNom() { return nom; }
-    public void setNom(String nom) { this.nom = nom; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
     public int getEtudiantId() { return etudiantId; }
     public void setEtudiantId(int etudiantId) { this.etudiantId = etudiantId; }
+
+    public int getTypeDocumentId() { return typeDocumentId; }
+    public void setTypeDocumentId(int typeDocumentId) { this.typeDocumentId = typeDocumentId; }
 
     public String getEtudiantNom() { return etudiantNom; }
     public void setEtudiantNom(String etudiantNom) { this.etudiantNom = etudiantNom; }
 
-    public String getCheminFichier() { return cheminFichier; }
-    public void setCheminFichier(String cheminFichier) { this.cheminFichier = cheminFichier; }
+    public String getTypeDocumentLibelle() { return typeDocumentLibelle; }
+    public void setTypeDocumentLibelle(String typeDocumentLibelle) { this.typeDocumentLibelle = typeDocumentLibelle; }
 
-    public LocalDateTime getDateAjout() { return dateAjout; }
-    public void setDateAjout(LocalDateTime dateAjout) { this.dateAjout = dateAjout; }
+    public String getFichier() { return fichier; }
+    public void setFichier(String fichier) { this.fichier = fichier; }
+
+    public LocalDate getDateAjout() { return dateAjout; }
+    public void setDateAjout(LocalDate dateAjout) { this.dateAjout = dateAjout; }
 
     @Override
     public String toString() {
-        return nom + " (" + type + ")";
+        return typeDocumentLibelle + " - " + etudiantNom;
     }
 }

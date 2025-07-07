@@ -3,6 +3,7 @@ package com.pigier.pigieretudiant.controllers;
 import com.pigier.pigieretudiant.models.Etudiant;
 import com.pigier.pigieretudiant.models.Filiere;
 import com.pigier.pigieretudiant.models.Niveaux;
+import com.pigier.pigieretudiant.models.FiliereNiveau;
 import com.pigier.pigieretudiant.utils.SceneUtils;
 import com.pigier.pigieretudiant.utils.ValidationUtils;
 import com.pigier.pigieretudiant.utils.ExportUtils;
@@ -16,6 +17,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class EtudiantController {
 
@@ -28,9 +30,9 @@ public class EtudiantController {
     @FXML private ComboBox<String> genreEtudiant;
     @FXML private TextField contactEtudiant;
     @FXML private TextField emailEtudiant;
-    @FXML private ComboBox<String> filierEtudiant;
-    @FXML private ComboBox<String> niveauEtudiant;
+    @FXML private ComboBox<FiliereNiveau> filierEtudiant;
     @FXML private TextField nationnaliteEtudiant;
+    @FXML private TextArea adresseEtudiant;
     @FXML private Label erreurLabel;
     @FXML private Label successLabel;
 
@@ -58,11 +60,12 @@ public class EtudiantController {
         }
 
         if (filierEtudiant != null) {
-            filierEtudiant.getItems().addAll(Filiere.getListe());
-        }
-
-        if (niveauEtudiant != null) {
-            niveauEtudiant.getItems().addAll(Niveaux.getListe());
+            try {
+                List<FiliereNiveau> filiereNiveaux = FiliereNiveau.getAll();
+                filierEtudiant.getItems().addAll(filiereNiveaux);
+            } catch (ClassNotFoundException e) {
+                showError("Erreur de chargement des filières: " + e.getMessage());
+            }
         }
 
         if (filterFiliere != null) {
@@ -144,10 +147,6 @@ public class EtudiantController {
         colActions.setCellFactory(cellFactory);
     }
 
-    public void showInfoPersonnelle() {
-        // Méthode pour afficher les informations personnelles
-    }
-
     public void editEtudiant(Etudiant etudiant) {
         if (etudiant == null) return;
         
@@ -164,7 +163,7 @@ public class EtudiantController {
             if (contactEtudiant != null) contactEtudiant.setText(etudiant.getContact());
             if (emailEtudiant != null) emailEtudiant.setText(etudiant.getEmail());
             if (nationnaliteEtudiant != null) nationnaliteEtudiant.setText(etudiant.getNationalite());
-            if (filierEtudiant != null) filierEtudiant.setValue(etudiant.getFiliere());
+            if (adresseEtudiant != null) adresseEtudiant.setText(etudiant.getAdresse());
             
             selectedEtudiant = etudiant;
             
@@ -227,17 +226,22 @@ public class EtudiantController {
                         ValidationUtils.formatMatricule(matriculeEtudiant.getText()),
                         dateNaissanceEtudiant.getValue() != null ? dateNaissanceEtudiant.getValue().toString() : "",
                         lieuxNaissanceEtudiant.getText().trim(),
-                        genreEtudiant.getValue() != null ? genreEtudiant.getValue().charAt(0) : ' ',
+                        genreEtudiant.getValue() != null ? genreEtudiant.getValue() : "",
                         ValidationUtils.formatPhone(contactEtudiant.getText()),
                         emailEtudiant.getText().trim(),
                         nationnaliteEtudiant.getText().trim()
                 );
 
-                if (filierEtudiant.getValue() != null) {
-                    nouvelEtudiant.setFiliere(filierEtudiant.getValue());
+                if (adresseEtudiant != null) {
+                    nouvelEtudiant.setAdresse(adresseEtudiant.getText().trim());
                 }
 
-                nouvelEtudiant.create("1");
+                String filiereNiveauId = "1"; // Par défaut
+                if (filierEtudiant.getValue() != null) {
+                    filiereNiveauId = String.valueOf(filierEtudiant.getValue().getId());
+                }
+
+                nouvelEtudiant.create(filiereNiveauId);
                 showSuccess("Étudiant créé avec succès!");
             } else {
                 // Mise à jour d'un étudiant existant
@@ -248,12 +252,12 @@ public class EtudiantController {
                     dateNaissanceEtudiant.getValue().toString() : "");
                 selectedEtudiant.setLieuxNaissance(lieuxNaissanceEtudiant.getText().trim());
                 selectedEtudiant.setGenre(genreEtudiant.getValue() != null ? 
-                    genreEtudiant.getValue().charAt(0) : ' ');
+                    genreEtudiant.getValue() : "");
                 selectedEtudiant.setContact(ValidationUtils.formatPhone(contactEtudiant.getText()));
                 selectedEtudiant.setEmail(emailEtudiant.getText().trim());
                 selectedEtudiant.setNationalite(nationnaliteEtudiant.getText().trim());
-                if (filierEtudiant.getValue() != null) {
-                    selectedEtudiant.setFiliere(filierEtudiant.getValue());
+                if (adresseEtudiant != null) {
+                    selectedEtudiant.setAdresse(adresseEtudiant.getText().trim());
                 }
 
                 selectedEtudiant.update();
@@ -277,10 +281,10 @@ public class EtudiantController {
         if (contactEtudiant != null) contactEtudiant.clear();
         if (emailEtudiant != null) emailEtudiant.clear();
         if (nationnaliteEtudiant != null) nationnaliteEtudiant.clear();
+        if (adresseEtudiant != null) adresseEtudiant.clear();
         if (dateNaissanceEtudiant != null) dateNaissanceEtudiant.setValue(null);
         if (genreEtudiant != null) genreEtudiant.setValue(null);
         if (filierEtudiant != null) filierEtudiant.setValue(null);
-        if (niveauEtudiant != null) niveauEtudiant.setValue(null);
         if (erreurLabel != null) erreurLabel.setText("");
         if (successLabel != null) successLabel.setText("");
     }

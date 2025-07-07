@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -41,21 +40,14 @@
                                 <VBox spacing="5.0">
                                     <children>
                                         <Label text="Étudiant:" />
-                                        <ComboBox fx:id="etudiantComboBox" prefWidth="200.0" />
+                                        <ComboBox fx:id="etudiantComboBox" prefWidth="250.0" />
                                     </children>
                                 </VBox>
 
                                 <VBox spacing="5.0">
                                     <children>
                                         <Label text="Type de document:" />
-                                        <ComboBox fx:id="typeDocumentComboBox" prefWidth="180.0" />
-                                    </children>
-                                </VBox>
-
-                                <VBox spacing="5.0">
-                                    <children>
-                                        <Label text="Nom du document:" />
-                                        <TextField fx:id="nomDocumentField" prefWidth="200.0" />
+                                        <ComboBox fx:id="typeDocumentComboBox" prefWidth="200.0" />
                                     </children>
                                 </VBox>
                             </children>
@@ -98,9 +90,8 @@
 
                         <TableView fx:id="documentsTable" prefHeight="500.0" prefWidth="1140.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                             <columns>
-                                <TableColumn fx:id="colNomDocument" prefWidth="250.0" text="Nom du Document" />
-                                <TableColumn fx:id="colTypeDocument" prefWidth="150.0" text="Type" />
-                                <TableColumn fx:id="colEtudiant" prefWidth="200.0" text="Étudiant" />
+                                <TableColumn fx:id="colTypeDocument" prefWidth="200.0" text="Type de Document" />
+                                <TableColumn fx:id="colEtudiant" prefWidth="250.0" text="Étudiant" />
                                 <TableColumn fx:id="colDateAjout" prefWidth="150.0" text="Date d'ajout" />
                             </columns>
                         </TableView>
