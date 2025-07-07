@@ -1,6 +1,7 @@
 package com.pigier.pigieretudiant.utils;
 
 import com.pigier.pigieretudiant.models.Etudiant;
+import com.pigier.pigieretudiant.controllers.RapportsController.RapportEtudiant;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -25,11 +26,11 @@ public class ExportUtils {
         if (file != null) {
             try (FileWriter writer = new FileWriter(file)) {
                 // En-têtes
-                writer.write("Nom,Prénoms,Matricule,Date de naissance,Lieu de naissance,Genre,Téléphone,Email,Nationalité,Filière,Niveau\n");
+                writer.write("Nom,Prénoms,Matricule,Date de naissance,Lieu de naissance,Genre,Téléphone,Email,Nationalité,Adresse,Filière,Niveau\n");
                 
                 // Données
                 for (Etudiant etudiant : etudiants) {
-                    writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+                    writer.write(String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
                         escapeCSV(etudiant.getNom()),
                         escapeCSV(etudiant.getPrenom()),
                         escapeCSV(etudiant.getMatricule()),
@@ -39,8 +40,39 @@ public class ExportUtils {
                         escapeCSV(etudiant.getContact()),
                         escapeCSV(etudiant.getEmail()),
                         escapeCSV(etudiant.getNationalite()),
+                        escapeCSV(etudiant.getAdresse()),
                         escapeCSV(etudiant.getFiliere()),
                         escapeCSV(etudiant.getNiveau())
+                    ));
+                }
+            }
+        }
+    }
+
+    public static void exportRapportToCSV(List<RapportEtudiant> rapports, Window ownerWindow) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Exporter le rapport");
+        fileChooser.setInitialFileName("rapport_notes_" + 
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) + ".csv");
+        fileChooser.getExtensionFilters().add(
+            new FileChooser.ExtensionFilter("Fichiers CSV", "*.csv")
+        );
+
+        java.io.File file = fileChooser.showSaveDialog(ownerWindow);
+        if (file != null) {
+            try (FileWriter writer = new FileWriter(file)) {
+                // En-têtes
+                writer.write("Nom Complet,Matricule,Filière,Niveau,Moyenne,Mention\n");
+                
+                // Données
+                for (RapportEtudiant rapport : rapports) {
+                    writer.write(String.format("%s,%s,%s,%s,%.2f,%s\n",
+                        escapeCSV(rapport.getNomComplet()),
+                        escapeCSV(rapport.getMatricule()),
+                        escapeCSV(rapport.getFiliere()),
+                        escapeCSV(rapport.getNiveau()),
+                        rapport.getMoyenne(),
+                        escapeCSV(rapport.getMention())
                     ));
                 }
             }
@@ -88,10 +120,14 @@ public class ExportUtils {
                 long l1 = etudiants.stream().filter(e -> "L1".equals(e.getNiveau())).count();
                 long l2 = etudiants.stream().filter(e -> "L2".equals(e.getNiveau())).count();
                 long l3 = etudiants.stream().filter(e -> "L3".equals(e.getNiveau())).count();
+                long m1 = etudiants.stream().filter(e -> "M1".equals(e.getNiveau())).count();
+                long m2 = etudiants.stream().filter(e -> "M2".equals(e.getNiveau())).count();
                 
                 writer.write("L1: " + l1 + "\n");
                 writer.write("L2: " + l2 + "\n");
-                writer.write("L3: " + l3 + "\n\n");
+                writer.write("L3: " + l3 + "\n");
+                writer.write("M1: " + m1 + "\n");
+                writer.write("M2: " + m2 + "\n\n");
                 
                 // Répartition par filière
                 writer.write("RÉPARTITION PAR FILIÈRE\n");

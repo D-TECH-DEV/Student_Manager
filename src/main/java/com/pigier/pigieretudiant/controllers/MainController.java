@@ -40,6 +40,21 @@ public class MainController {
     }
 
     @FXML
+    public void goToMatieres() {
+        SceneUtils.changeChild("/com/pigier/pigieretudiant/views/Matieres.fxml", chilFenetre);
+    }
+
+    @FXML
+    public void goToNotes() {
+        SceneUtils.changeChild("/com/pigier/pigieretudiant/views/Notes.fxml", chilFenetre);
+    }
+
+    @FXML
+    public void goToRapports() {
+        SceneUtils.changeChild("/com/pigier/pigieretudiant/views/Rapports.fxml", chilFenetre);
+    }
+
+    @FXML
     public void goToRessortissants() {
         // À implémenter selon vos besoins
         System.out.println("Navigation vers Ressortissants");

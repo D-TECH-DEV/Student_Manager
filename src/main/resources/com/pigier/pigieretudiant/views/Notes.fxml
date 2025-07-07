@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.NotesController">
+    <children>
+        <!-- Main Content Area -->
+        <Pane prefHeight="900.0" prefWidth="1200.0">
+            <children>
+                <!-- Header -->
+                <Pane prefHeight="60.0" prefWidth="1200.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                    <children>
+                        <Label layoutX="30.0" layoutY="20.0" text="Gestion des Notes" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+
+                <!-- Form Section -->
+                <VBox layoutX="30.0" layoutY="80.0" prefHeight="200.0" prefWidth="1140.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
+                    <children>
+                        <Label text="Ajouter une nouvelle note" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Étudiant:" />
+                                        <ComboBox fx:id="etudiantComboBox" onAction="#filtrerParEtudiant" prefWidth="250.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Matière:" />
+                                        <ComboBox fx:id="matiereComboBox" prefWidth="200.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Note (/20):" />
+                                        <TextField fx:id="noteField" prefWidth="100.0" promptText="0.00" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <Button onAction="#ajouterNote" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="Ajouter Note" />
+                                <Label fx:id="moyenneLabel" text="Moyenne: N/A" textFill="#2c3e50">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="messageLabel" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- Table Section -->
+                <VBox layoutX="30.0" layoutY="300.0" prefHeight="550.0" prefWidth="1140.0" spacing="10.0">
+                    <children>
+                        <TableView fx:id="notesTable" prefHeight="500.0" prefWidth="1140.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colEtudiant" prefWidth="250.0" text="Étudiant" />
+                                <TableColumn fx:id="colMatiere" prefWidth="200.0" text="Matière" />
+                                <TableColumn fx:id="colNote" prefWidth="100.0" text="Note" />
+                                <TableColumn fx:id="colCoef" prefWidth="100.0" text="Coefficient" />
+                                <TableColumn fx:id="colActions" prefWidth="200.0" text="Actions" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</Pane>

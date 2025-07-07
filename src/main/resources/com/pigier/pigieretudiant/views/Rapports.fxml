@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pigier.pigieretudiant.controllers.RapportsController">
+    <children>
+        <!-- Main Content Area -->
+        <Pane prefHeight="900.0" prefWidth="1200.0">
+            <children>
+                <!-- Header -->
+                <Pane prefHeight="60.0" prefWidth="1200.0" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                    <children>
+                        <Label layoutX="30.0" layoutY="20.0" text="Rapports et Bulletins" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </Pane>
+
+                <!-- Controls Section -->
+                <VBox layoutX="30.0" layoutY="80.0" prefHeight="180.0" prefWidth="1140.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 20;">
+                    <children>
+                        <Label text="Génération de rapports" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Type de rapport:" />
+                                        <ComboBox fx:id="typeRapportComboBox" prefWidth="200.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Filière:" />
+                                        <ComboBox fx:id="filiereFilterComboBox" prefWidth="180.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="5.0">
+                                    <children>
+                                        <Label text="Niveau:" />
+                                        <ComboBox fx:id="niveauFilterComboBox" prefWidth="150.0" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <HBox spacing="15.0">
+                            <children>
+                                <Button onAction="#genererRapport" style="-fx-background-color: #007bff; -fx-text-fill: white;" text="Générer Rapport" />
+                                <Button onAction="#exporterRapport" style="-fx-background-color: #28a745; -fx-text-fill: white;" text="Exporter CSV" />
+                                <Label fx:id="totalEtudiantsLabel" text="Total étudiants: 0" textFill="#2c3e50">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="moyenneGeneraleLabel" text="Moyenne générale: N/A" textFill="#2c3e50">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- Table Section -->
+                <VBox layoutX="30.0" layoutY="280.0" prefHeight="570.0" prefWidth="1140.0" spacing="10.0">
+                    <children>
+                        <TableView fx:id="rapportTable" prefHeight="520.0" prefWidth="1140.0" style="-fx-background-color: white; -fx-background-radius: 10;">
+                            <columns>
+                                <TableColumn fx:id="colNom" prefWidth="250.0" text="Nom Complet" />
+                                <TableColumn fx:id="colMatricule" prefWidth="120.0" text="Matricule" />
+                                <TableColumn fx:id="colFiliere" prefWidth="150.0" text="Filière" />
+                                <TableColumn fx:id="colNiveau" prefWidth="100.0" text="Niveau" />
+                                <TableColumn fx:id="colMoyenne" prefWidth="100.0" text="Moyenne" />
+                                <TableColumn fx:id="colMention" prefWidth="150.0" text="Mention" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</Pane>

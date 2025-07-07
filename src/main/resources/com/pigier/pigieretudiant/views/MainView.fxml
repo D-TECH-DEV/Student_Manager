@@ -57,13 +57,43 @@
                             </children>
                         </Pane>
 
+                        <!-- Notes -->
+                        <Pane fx:id="notesBtn" onMouseClicked="#goToNotes" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Notes" textFill="WHITE">
+                                    <font><Font size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📝" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Matières -->
+                        <Pane fx:id="matieresBtn" onMouseClicked="#goToMatieres" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Matières" textFill="WHITE">
+                                    <font><Font size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📖" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
+                        <!-- Rapports -->
+                        <Pane fx:id="rapportsBtn" onMouseClicked="#goToRapports" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
+                            <children>
+                                <Label layoutX="50.0" layoutY="15.0" text="Rapports" textFill="WHITE">
+                                    <font><Font size="16.0" /></font>
+                                </Label>
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📊" textFill="WHITE" />
+                            </children>
+                        </Pane>
+
                         <!-- Statistiques -->
                         <Pane fx:id="statistiquesBtn" onMouseClicked="#goToStatistiques" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
                             <children>
                                 <Label layoutX="50.0" layoutY="15.0" text="Statistiques" textFill="WHITE">
                                     <font><Font size="16.0" /></font>
                                 </Label>
-                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📊" textFill="WHITE" />
+                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📈" textFill="WHITE" />
                             </children>
                         </Pane>
 
@@ -74,16 +104,6 @@
                                     <font><Font size="16.0" /></font>
                                 </Label>
                                 <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="📚" textFill="WHITE" />
-                            </children>
-                        </Pane>
-
-                        <!-- Ressortissants -->
-                        <Pane fx:id="ressortissantsBtn" onMouseClicked="#goToRessortissants" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-background-radius: 8; -fx-cursor: hand;" styleClass="nav-item">
-                            <children>
-                                <Label layoutX="50.0" layoutY="15.0" text="Ressortissants" textFill="WHITE">
-                                    <font><Font size="16.0" /></font>
-                                </Label>
-                                <Label layoutX="15.0" layoutY="12.0" style="-fx-font-size: 18px;" text="🌍" textFill="WHITE" />
                             </children>
                         </Pane>
                     </children>
